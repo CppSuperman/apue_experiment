@@ -1,0 +1,27 @@
+Recently I’ve been testing APIC-EM, and more specifically its Plug and Play 
+application. PnP in the context of APIC-EM is the provisioning of new network 
+devices. The API for APIC-EM is quite comprehensive, but the web application i
+tself doesn’t allow for much customization. Instead of using the APIC-EM GUI, t
+hese kind of customizations can be done from an app written in Flask.
+
+As I started to model the application in my head, I eventually ran into a prob
+lem. I would want the application to connect to the network inventory, create 
+the device configs with Jinja2 templates, and I needed the Flask app to regular
+ly poll the APIC-EM server and check if there any new unclaimed devices had rep
+orted in. When a new device is connected to the network it registers itself with 
+the APIC-EM server. If no preexisting rule is defined for that device it gets cla
+ssified as an unclaimed device.
+
+In order to start the recurring job Flask has a decorator called before_first_
+request, or before_app_first_request if you are using a Flask Blueprint. A function
+ decorated with before_first_request will trigger before the first request from a 
+ user is processed. Here is a simple Flask app to illustrate the concept where a
+  decorated function is used to start a job in a
+
+Flask includes a Python decorator which allows you to run a function before the
+ first request from a user is processed. The problem I had is that the function 
+ doesn’t get run until after a user has visited a page for the first time. This 
+ article describes a way to solve that. If you haven’t heard of Flask before it’s
+  a Python microframework for web applications. With Flask you can create small or 
+  large websites. While this article isn’t a getting started guide for Flask, it 
+  will include a complete working application.
